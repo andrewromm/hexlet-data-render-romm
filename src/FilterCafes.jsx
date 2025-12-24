@@ -3,12 +3,12 @@ const subways = [
   { name: 'Александровский сад', code: 'Alexanders Garden' },
   { name: 'Московская', code: 'Moscow' },
   { name: 'Парк Культуры', code: 'Culture' },
-  { name: 'Театральная', code: 'Theater' },
+  { name: 'Театральная', code: 'Theatr' },
 ];
 
-const FilterCafes = () => (
+const FilterCafes = ({ filter, onFilterChange }) => (
   <div className="controls">
-    <select name="subway" id="subway">
+    <select name="subway" id="subway" value={filter} onChange={onFilterChange}>
       <option value="All">Все</option>
       {subways.map((subway) => (
         <option key={subway.code} value={subway.code}>{subway.name}</option>

@@ -4,6 +4,7 @@ import FilterCafes from './FilterCafes.jsx';
 
 const CafesTable = () => {
   const [cafes, setCafes] = useState([]);
+  const [filter, setFilter] = useState('All');
 
   useEffect(() => {
     axios.get('/cafes').then((response) => {
@@ -11,13 +12,21 @@ const CafesTable = () => {
     });
   }, []);
 
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const filteredCafes = filter === 'All'
+    ? cafes
+    : cafes.filter((cafe) => cafe.subwayCode === filter);
+
   return (
     <div className="cafesTable">
-      <FilterCafes />
+      <FilterCafes filter={filter} onFilterChange={handleFilterChange} />
       <ul className="cardsList">
-        {cafes.map((cafe) => (
+        {filteredCafes.map((cafe) => (
           <li key={cafe.id} className="card">
-            <img src={cafe.img || 'https://via.placeholder.com/150'} alt="" />
+            <img src={cafe.img || 'https://placehold.co/150'} alt="" />
             <h2>{cafe.name}</h2>
             <p>{cafe.desc}</p>
             <p>{cafe.address}</p>
